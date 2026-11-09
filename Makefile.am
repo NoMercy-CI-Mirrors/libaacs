@@ -136,7 +136,7 @@ cci_dump_SOURCES = \
 cci_dump_CFLAGS = -std=c99
 
 aacs_info_SOURCES = src/examples/aacs_info.c
-aacs_info_CFLAGS = -std=c99
+aacs_info_CFLAGS = -std=c99 $(LIBUDFREAD_CFLAGS)
 aacs_info_LDADD = libaacs.la $(LIBUDFREAD_LIBS)
 if HAVE_WIN32
 else
