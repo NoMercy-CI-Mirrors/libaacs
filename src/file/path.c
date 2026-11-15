@@ -42,6 +42,7 @@ char *aacs_resolve_path(const char *path)
     char link[AACS_PATH_MAX];
     char *new_path = resolved_path;
     char *path_end = tmp_path + AACS_PATH_MAX - 1;
+    char *new_path_end = resolved_path + AACS_PATH_MAX - 2;
     int readlinks = 0;
     int n;
 
@@ -91,7 +92,7 @@ char *aacs_resolve_path(const char *path)
 
         /* copy next component */
         while (*path && *path != '/') {
-            if (path >= path_end) {
+            if (path >= path_end || new_path >= new_path_end) {
                 return NULL;
             }
             *new_path++ = *path++;
@@ -124,7 +125,8 @@ char *aacs_resolve_path(const char *path)
                 while (*(--new_path) != '/');
             }
 
-            if (path + n >= path_end) {
+            /* link[] receives the link target plus what is left of the path */
+            if ((size_t)n + strlen(path) >= AACS_PATH_MAX - 1) {
                 return NULL;
             }
 
