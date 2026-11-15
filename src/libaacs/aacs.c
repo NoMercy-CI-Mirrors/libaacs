@@ -637,6 +637,7 @@ static int _calc_mk(AACS *aacs)
     }
 
     if (!_ensure_config(aacs)) {
+        mkb_close(mkb);
         return AACS_ERROR_NO_CONFIG;
     }
 
